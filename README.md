@@ -7,7 +7,7 @@ The NP starter kit describes how to launch a NP RApp in minutes. Quickstart assu
 commands
 ```bash
 git clone git@github.com:ZestBloom/reverse-floor-calcs.git
-cd everse-floor-calcs
+cd reverse-floor-calcs
 source np.sh 
 np
 ```
