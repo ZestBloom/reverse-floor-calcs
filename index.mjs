@@ -124,5 +124,32 @@ const [, , infile] = process.argv;
 
   await reset([accAlice, accBob]);
 
+    // (3) CAN REACH FLOOR IN TIME
+    console.log("CAN REACH FLOOR IN TIME");
+    await (async (acc, acc2) => {
+      let addr = acc.networkAccount.addr;
+      let ctc = acc.contract(backend);
+      Promise.all([
+        backend.Constructor(ctc, {
+          getParams: () => getParams(addr),
+          signal,
+        }),
+      ]);
+      let appId = await ctc.getInfo();
+      console.log(appId);
+      let ctc2 = acc2.contract(backend, appId);
+      await Promise.all([
+        backend.Contractee(ctc2, {}),
+        backend.Alice(ctc2, {
+          log: (a,b) => {
+            console.log(a, stdlib.bigNumberToNumber(b))
+          }
+        })
+      ]);
+      await stdlib.wait(50);
+    })(accAlice, accBob);
+    await stdlib.wait(4);
+  
+
   process.exit();
 })();
